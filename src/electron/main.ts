@@ -16,5 +16,5 @@ app.on("ready", ()=>{
     // app.getAppPath() 获得当前应用的路径
     mainWindow.loadFile(path.join(app.getAppPath(),'dist-react','index.html'))
   }
-  pollResource()
+  pollResource(mainWindow)
 })
