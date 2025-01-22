@@ -1,6 +1,7 @@
  {
   "appId": "com.electron-react.app",
   "files": ["dist-electron", "dist-react"],
+  "extraResources": ["dist-electron/preload.cjs"],
   "icon": "public/vite.svg",
   "mac": {
     "target": "dmg"
