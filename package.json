@@ -10,7 +10,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "transpile:electron": "tsc --project src/electron/tsconfig.json"
+    "transpile:electron": "tsc --project src/electron/tsconfig.json",
+    "dist:win": "pnpm run transpile:electron && pnpm run build && electron-builder --win --x64"
   },
   "dependencies": {
     "react": "^18.3.1",
