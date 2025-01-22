@@ -9,3 +9,8 @@ export const getPreloadPath = ()=>{
     'preload.cjs'
   )
 }
+
+export const getUIPath = () =>{
+  // app.getAppPath() 获得当前应用的路径
+  return path.join(app.getAppPath(),'dist-react','index.html')
+}
