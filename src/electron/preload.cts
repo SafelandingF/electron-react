@@ -9,5 +9,5 @@ electron.contextBridge.exposeInMainWorld("electron",{
       cb(data)
     })
   },
-  getStaticData: () => console.log("getStaticData")
+  getStaticData: () => electron.ipcRenderer.invoke("getStaticData")
 })
