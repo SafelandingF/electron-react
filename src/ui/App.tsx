@@ -16,11 +16,13 @@ function App() {
     () => statistics.map(item => item.cpuUsage),
     [statistics]
   )
+  // 传入一个空数组 只会在mount中执行一次
   useEffect(()=>{
-    const unsubsciribe = window.electron.subscribeStatistics(data => console.log(data))
-    // return unsubsciribe()
+    // const unsubsciribe = window.electron.subscribeStatistics(data
+    //  => console.log(data))
+    return window.electron.changeView((view)=> console.log(view))
   },[])
-  // window.electron.getStaticData()
+  
   return (
     <>      
       <div>

@@ -1,4 +1,4 @@
-import {app , BrowserWindow ,Tray} from 'electron'
+import {app , BrowserWindow ,Menu,Tray} from 'electron'
 
 import { isDev } from './utils/env.js'
 import { getStaticData, pollResource } from './utils/resourceManager.js'
@@ -7,6 +7,8 @@ import { ipcMainHandle } from './utils/ipcHandle.js'
 import { createTray } from './tray.js'
 import { createMenu } from './menu.js'
 
+
+// Menu.setApplicationMenu(null)
 
 app.on("ready", ()=>{
   const mainWindow = new BrowserWindow({
@@ -20,7 +22,7 @@ app.on("ready", ()=>{
     mainWindow.loadFile(getUIPath())
   }
   createTray(mainWindow)
-  // createMenu(mainWindow)
+  createMenu(mainWindow)
   pollResource(mainWindow)
   ipcMainHandle('getStaticData',() => getStaticData())
   handleCloseEvents(mainWindow)

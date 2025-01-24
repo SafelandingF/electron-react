@@ -8,9 +8,12 @@ type StaticData = {
   totalMemoGb:number 
 }
 
+type View = "CPU" | "RAM" | "STORAGE"
+
 type EventPayLoadMapping = {
   statistics: Statistics,
-  getStaticData: StaticData
+  getStaticData: StaticData,
+  changeView: View
 }
 
 type UnsubsciribeFunction = () => void
@@ -18,6 +21,7 @@ type UnsubsciribeFunction = () => void
 interface Window {
   electron:{
     subscribeStatistics: (cb:(statistics:Statistics) => void) => UnsubsciribeFunction,
-    getStaticData: ()=> Promise<StaticData>
+    getStaticData: ()=> Promise<StaticData>,
+    changeView: (cb:(view:View)=> void) => UnsubsciribeFunction
   }
 }
