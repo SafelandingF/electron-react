@@ -2,10 +2,11 @@ import {app , BrowserWindow ,Menu,Tray} from 'electron'
 
 import { isDev } from './utils/env.js'
 import { getStaticData, pollResource } from './utils/resourceManager.js'
-import { getPreloadPath, getUIPath } from './pathResolver.js'
+import { getAssetsPath, getPreloadPath, getUIPath } from './pathResolver.js'
 import { ipcMainHandle } from './utils/ipcHandle.js'
 import { createTray } from './tray.js'
-import { createMenu } from './menu.js'
+import path from 'path'
+import { ipcMainOn } from './preload.cjs'
 
 
 // Menu.setApplicationMenu(null)
@@ -14,15 +15,25 @@ app.on("ready", ()=>{
   const mainWindow = new BrowserWindow({
     webPreferences:{
       preload:getPreloadPath()
-    }
+    },
+    frame:false,
+    icon:path.join(getAssetsPath(),'trayIcon.png') 
   })
   if(isDev()){
     mainWindow.loadURL('http://localhost:1123')
   } else{
     mainWindow.loadFile(getUIPath())
   }
+
+  // ipcMainOn("sendFrameAction", (payload)=>{
+  //   switch(payload){
+  //     case "CLOSE": mainWindow.close();break;
+  //     case "MINIMIZE": mainWindow.minimize();break;
+  //     case "MAXIMIZE": mainWindow.maximize();break;
+  //   }
+  // })
   createTray(mainWindow)
-  createMenu(mainWindow)
+  // createMenu(mainWindow)
   pollResource(mainWindow)
   ipcMainHandle('getStaticData',() => getStaticData())
   handleCloseEvents(mainWindow)
