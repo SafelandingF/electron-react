@@ -8,7 +8,7 @@ export const pollResource = (mainWindow:BrowserWindow)=>{
   setInterval(async()=>{
     const cpuUsage = await getCpuUsage()
     const ramUsgae = getRamUsage()
-    ipcWebContentsSend('getStaticData',mainWindow.webContents,{cpuUsage,ramUsgae})
+    ipcWebContentsSend('statistics',mainWindow.webContents,{cpuUsage,ramUsgae})
   },POLLING_INTERVAL)
 }
 

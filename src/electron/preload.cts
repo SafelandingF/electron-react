@@ -7,8 +7,8 @@ const electron = require('electron')
 // on提供了监听事件的功能
 // invoke提供了发送事件的功能
 electron.contextBridge.exposeInMainWorld("electron",{
-  subscribeStatistics:(cb) => {
-    ipcOn('statistics',(stats) => cb(stats))
+  subscribeStatistics: (cb) => {
+    return ipcOn('statistics',(stats) => cb(stats))
   },
   getStaticData: () => ipcInvoke("getStaticData")
 } satisfies Window["electron"])
@@ -19,6 +19,8 @@ const ipcInvoke = <Key extends keyof EventPayLoadMapping>(key :Key): Promise<Eve
 }
 const ipcOn = <Key extends keyof EventPayLoadMapping>(key:Key,
   cb:(palyload:EventPayLoadMapping[Key]) => void
-) =>{
-  electron.ipcRenderer.on(key,(_,playoad)=> cb(playoad))
+):UnsubsciribeFunction=>{
+  const callback = (_:Electron.IpcRendererEvent,palyload:EventPayLoadMapping[Key]) => cb(palyload)
+  electron.ipcRenderer.on(key,callback)
+  return () => electron.ipcRenderer.off(key,callback)
 }

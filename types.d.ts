@@ -1,6 +1,6 @@
 type Statistics = {
-  cupUsage: number,
-  ramUsgae:number
+  cpuUsage: number,
+  ramUsgae: number
 }
 
 type StaticData = {
@@ -13,9 +13,11 @@ type EventPayLoadMapping = {
   getStaticData: StaticData
 }
 
+type UnsubsciribeFunction = () => void
+
 interface Window {
   electron:{
-    subscribeStatistics: (cb:(statistics:Statistics) => void) => void,
+    subscribeStatistics: (cb:(statistics:Statistics) => void) => UnsubsciribeFunction,
     getStaticData: ()=> Promise<StaticData>
   }
 }
