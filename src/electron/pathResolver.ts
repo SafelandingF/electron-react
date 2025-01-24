@@ -14,3 +14,7 @@ export const getUIPath = () =>{
   // app.getAppPath() 获得当前应用的路径
   return path.join(app.getAppPath(),'dist-react','index.html')
 }
+
+export const getAssetsPath = () =>{
+  return path.join(app.getAppPath(), isDev()? '.' : '..','src','assets')
+}
